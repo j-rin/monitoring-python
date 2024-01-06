@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: python-monitoring-app-deployment
+spec:
+  replicas: 3  # Adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: monitoring-app
+  template:
+    metadata:
+      labels:
+        app: monitoring-app
+    spec:
+      containers:
+      - name:  monitoring-app
+        image: jerinpaul/monitoring:latest  # Replace with your actual Docker image
+        ports:
+        - containerPort: 5000  # Adjust the port number based on your application
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: python-monitoring-app-service
+spec:
+  selector:
+    app: monitoring-app
+  ports:
+    - protocol: TCP
+      port: 80  # Expose the service on port 80
+      targetPort: 5000  # Port on which your application is running
+  type: LoadBalancer  # Use LoadBalancer type if running on a cloud provider, otherwise use NodePort or ClusterIP
