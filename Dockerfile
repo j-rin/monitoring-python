@@ -6,7 +6,7 @@ COPY requirements.txt .
 
 RUN pip3 install --no-cache-dir -r requirements.txt
 
-COPY . .
+COP . .
 
 ENV FLASK_RUN_HOST=0.0.0.0
 
